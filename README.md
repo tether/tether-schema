@@ -1,17 +1,41 @@
-
 # Tether-Schema
 
-[![Build Status](https://travis-ci.org/petrofeed/tether-schema.svg?branch=master)](https://travis-ci.org/petrofeed/tether-schema)
+[![Build Status](https://travis-ci.org/tether/tether-schema.svg?branch=master)](https://travis-ci.org/tether/tether-schema)
 [![NPM](https://img.shields.io/npm/v/tether-schema.svg)](https://www.npmjs.com/package/tether-schema)
 [![Downloads](https://img.shields.io/npm/dm/tether-schema.svg)](http://npm-stat.com/charts.html?package=tether-schema)
 [![guidelines](https://tether.github.io/contribution-guide/badge-guidelines.svg)](https://github.com/tether/contribution-guide)
 
-This is a simple description.
+Validate your data against a custom protocol buffer syntax.
 
 ## Usage
 
 ```js
+const fs = require('fs')
+const protocol = require('tether-schema')
 
+const schema = protocol(`
+  message User {
+    required string email = 1;
+    required string password = 2;
+    optional timestamp date = 3;
+  }
+`, {
+  timestamp: (date) => {
+    return new Date(date)
+  }
+})
+
+schema({
+  email: 'olivier.wietrich@gmail.com'
+})
+// => trigger TypeError: field password is missing
+
+schema({
+  email: 'olivier.witrich@gmail.com',
+  password: 'hello world',
+  date: 10
+})
+// => {email: ..., password: ..., date: 'Tue Jun 20 2017 14:47:04 GMT-0600 (MDT)'}
 ```
 
 ## Installation
@@ -30,9 +54,9 @@ For support, bug reports and or feature requests please make sure to read our
 
 ## Contribution
 
-The open source community is very important to us. If you want to participate to this repository, please make sure to read our <a href="https://github.com/tether/contribution-guide" target="_blank">guideline</a> before making any pull request. If you have any related project, please let everyone know in our wiki.
-## License
+The open source community is very important to us. If you want to participate to this repository, please make sure to read our <a href="https://github.com/tether/contribution-guide" target="_blank">guidelines</a> before making any pull request. If you have any related project, please let everyone know in our wiki.
 
+## License
 
 The MIT License (MIT)
 
@@ -43,5 +67,3 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-  
-  
