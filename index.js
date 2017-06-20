@@ -25,8 +25,8 @@ const protocol = require('protocol-buffers-schema').parse
  * @api public
  */
 
-module.exports = function (schema, validator) {
-  const obj = messages(schema)
+module.exports = function (schema, validator, mixins) {
+  const obj = messages(schema, mixins)
   return (name, arg) => {
     const result = {}
     const message = obj[name]
@@ -46,15 +46,16 @@ module.exports = function (schema, validator) {
  * Parse messages from schema txt.
  *
  * @param {String} schema
+ * @param {Object} mixins
  * @return {Object}
  * @api private
  */
 
-function messages (schema) {
+function messages (schema, mixins) {
   const result = {}
   const obj = protocol(schema)
   obj.messages.map(message => {
-    result[message.name] = fields(message.fields)
+    result[message.name] = fields(message.fields, mixins)
   })
   return result
 }
@@ -64,19 +65,23 @@ function messages (schema) {
  * Parse fields from schema messages.
  *
  * @param {Array} arr
+ * @param {Object} mixins
  * @return {Object}
  * @api private
  */
 
-function fields (arr) {
+function fields (arr, mixins) {
   const result = {}
   arr.map(item => {
     const field = item.name
+    const mixin = item.options.mixin
     const type = item.type
     result[field] = function (value) {
       if (item.required && value == null) throw new ReferenceError(`field ${field} is not defined`)
       if (value && typeof value !== type) throw new TypeError(`field ${field} is not a ${type}`)
-      return value
+      return mixin
+        ? mixins[mixin](value)
+        : value
     }
   })
   return result
