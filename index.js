@@ -79,7 +79,7 @@ function fields (arr, mixins) {
     result[field] = function (value) {
       if (item.required && value == null) throw new ReferenceError(`field ${field} is not defined`)
       if (value && typeof value !== type) throw new TypeError(`field ${field} is not a ${type}`)
-      return mixin
+      return mixins && mixin && mixins[mixin]
         ? mixins[mixin](value)
         : value
     }

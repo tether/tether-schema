@@ -132,7 +132,7 @@ test('should trigger Error if field is not validated', assert => {
   }
 })
 
-test('should define mixin', assert => {
+test('should apply mixin', assert => {
   assert.plan(1)
   const schema = protocol(`
     message User {
@@ -148,4 +148,18 @@ test('should define mixin', assert => {
     name: 'foo'
   })
   assert.equal(result.name, 'hello foo')
+})
+
+test('should not apply mixin if does not exist', assert => {
+  assert.plan(1)
+  const schema = protocol(`
+    message User {
+      required string name = 1 [mixin = hello];
+    }
+  `)
+
+  const result = schema('User', {
+    name: 'foo'
+  })
+  assert.equal(result.name, 'foo')
 })
