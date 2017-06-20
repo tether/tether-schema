@@ -39,6 +39,7 @@ module.exports = function (schema) {
   }
 }
 
+
 /**
  * Parse messages from schema txt.
  *

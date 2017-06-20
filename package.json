@@ -11,9 +11,12 @@
     "url": "git+https://github.com/tether/tether-schema.git"
   },
   "keywords": [
-    "tether"
+    "tether",
+    "schema",
+    "protocol",
+    "validation"
   ],
-  "author": "Petrofeed Inc",
+  "author": "Olivier Wietrich, Petrofeed Inc",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/tether/tether-schema/issues"
