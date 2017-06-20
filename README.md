@@ -25,12 +25,12 @@ const schema = protocol(`
   }
 })
 
-schema({
+schema('User', {
   email: 'olivier.wietrich@gmail.com'
 })
 // => trigger TypeError: field password is missing
 
-schema({
+schema('User', {
   email: 'olivier.witrich@gmail.com',
   password: 'hello world',
   date: 10

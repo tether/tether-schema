@@ -1,4 +1,3 @@
-
 {
   "name": "tether-schema",
   "version": "1.0.0",
@@ -22,6 +21,8 @@
   "homepage": "https://github.com/tether/tether-schema#readme",
   "devDependencies": {
     "tape": "*"
+  },
+  "dependencies": {
+    "protocol-buffers-schema": "^3.3.1"
   }
 }
-  
