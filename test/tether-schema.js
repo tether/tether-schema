@@ -55,3 +55,20 @@ test('should return object if validated', assert => {
   const result = schema('User', Object.assign({}, obj))
   assert.deepEqual(result, obj)
 })
+
+
+test('should return object without optional field', assert => {
+  assert.plan(1)
+  const obj = {
+    email: 'olivier.wietrich@gmail.com'
+  }
+  const schema = protocol(`
+    message User {
+      required string email = 1;
+      optional string name = 2;
+    }
+  `)
+
+  const result = schema('User', Object.assign({}, obj))
+  assert.deepEqual(result, obj)
+})

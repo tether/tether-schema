@@ -18,7 +18,8 @@ module.exports = function (schema) {
     const message = obj[name]
     Object.keys(message)
       .map(key => {
-        result[key] = message[key](arg[key])
+        const value = message[key](arg[key])
+        if (value) result[key] = value
       })
     return result
   }
@@ -41,8 +42,8 @@ function fields (arr) {
     const field = item.name
     const type = item.type
     result[field] = function (value) {
-      if(item.required && value == null) throw new ReferenceError(`field ${field} is not defined`)
-      if (typeof value !== type) throw new TypeError(`field ${field} is not a ${type}`)
+      if (item.required && value == null) throw new ReferenceError(`field ${field} is not defined`)
+      if (value && typeof value !== type) throw new TypeError(`field ${field} is not a ${type}`)
       return value
     }
   })
