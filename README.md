@@ -6,6 +6,7 @@
 [![guidelines](https://tether.github.io/contribution-guide/badge-guidelines.svg)](https://github.com/tether/contribution-guide)
 
 Validate your data against a custom protocol buffer syntax.
+  * **validator**: Pass functions to validate and sanitize your data.
 
 ## Usage
 
