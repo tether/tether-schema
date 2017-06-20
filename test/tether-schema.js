@@ -57,7 +57,7 @@ test('should return object if validated', assert => {
 })
 
 
-test('should return object without optional field', assert => {
+test('should ignore optional fields in returned object if not defined', assert => {
   assert.plan(1)
   const obj = {
     email: 'olivier.wietrich@gmail.com'
