@@ -109,3 +109,25 @@ test('should return object with passed optional fields if validated', assert => 
   const result = schema('User', Object.assign({}, obj))
   assert.deepEqual(result, obj)
 })
+
+test('should trigger Error if field is not validated', assert => {
+  assert.plan(2)
+  const schema = protocol(`
+    message User {
+      required string password = 1;
+    }
+  `, {
+    password(value) {
+      return value.length > 4
+    }
+  })
+
+  try {
+    const result = schema('User', {
+      password: 'foo'
+    })
+  } catch (e) {
+    assert.equal(e.name, 'Error')
+    assert.equal(e.message, 'field password is malformatted')
+  }
+})

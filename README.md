@@ -10,32 +10,36 @@ Validate your data against a custom protocol buffer syntax.
 ## Usage
 
 ```js
-const fs = require('fs')
 const protocol = require('tether-schema')
 
 const schema = protocol(`
   message User {
     required string email = 1;
     required string password = 2;
-    optional timestamp date = 3;
   }
 `, {
-  timestamp: (date) => {
-    return new Date(date)
+  password: (value) => {
+    return value.length > 4
   }
 })
 
 schema('User', {
-  email: 'olivier.wietrich@gmail.com'
+  email: 'foo@bar.com'
 })
 // => trigger TypeError: field password is missing
 
 schema('User', {
-  email: 'olivier.witrich@gmail.com',
-  password: 'hello world',
-  date: 10
+  email: 'foo@bar.com',
+  password: 'foo',
 })
-// => {email: ..., password: ..., date: 'Tue Jun 20 2017 14:47:04 GMT-0600 (MDT)'}
+// => trigger FormatError: field password is malformatted
+
+
+schema('User', {
+  email: 'foo@bar.com',
+  password: 'helloworld',
+})
+// => {email: 'foo@bar.com', password: 'helloworld'}
 ```
 
 ## Installation

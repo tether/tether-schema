@@ -25,14 +25,16 @@ const protocol = require('protocol-buffers-schema').parse
  * @api public
  */
 
-module.exports = function (schema) {
+module.exports = function (schema, validator) {
   const obj = messages(schema)
   return (name, arg) => {
     const result = {}
     const message = obj[name]
     Object.keys(message)
       .map(key => {
+        const validate = validator && validator[key]
         const value = message[key](arg[key])
+        if (validate && !validate(value)) throw new Error(`field ${key} is malformatted`)
         if (value) result[key] = value
       })
     return result
