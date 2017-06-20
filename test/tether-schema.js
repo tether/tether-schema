@@ -92,3 +92,20 @@ test('should trigger TypeError if passed optional field is wrong type', assert =
     assert.equal(e.message, 'field name is not a string')
   }
 })
+
+test('should return object with passed optional fields if validated', assert => {
+  assert.plan(1)
+  const obj = {
+    email: 'olivier.wietrich@gmail.com',
+    name: 'Olivier'
+  }
+  const schema = protocol(`
+    message User {
+      required string email = 1;
+      optional string name = 2;
+    }
+  `)
+
+  const result = schema('User', Object.assign({}, obj))
+  assert.deepEqual(result, obj)
+})
