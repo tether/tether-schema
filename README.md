@@ -17,11 +17,15 @@ const protocol = require('tether-schema')
 const schema = protocol(`
   message User {
     required string email = 1;
-    required string password = 2;
+    required string password = 2 [mixin = hash];
   }
 `, {
   password: (value) => {
     return value.length > 4
+  }
+}, {
+  hash(value) {
+    return 'hash ' + value
   }
 })
 
@@ -41,7 +45,7 @@ schema('User', {
   email: 'foo@bar.com',
   password: 'helloworld',
 })
-// => {email: 'foo@bar.com', password: 'helloworld'}
+// => {email: 'foo@bar.com', password: 'hashhelloworld'}
 ```
 
 ## Installation
