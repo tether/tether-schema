@@ -72,3 +72,23 @@ test('should ignore optional fields in returned object if not defined', assert =
   const result = schema('User', Object.assign({}, obj))
   assert.deepEqual(result, obj)
 })
+
+test('should trigger TypeError if passed optional field is wrong type', assert =>{
+  assert.plan(2)
+  const schema = protocol(`
+    message User {
+      required string email = 1;
+      optional string name = 2;
+    }
+  `)
+
+  try {
+    schema('User', {
+      email: 'olivier.wietrich@gmail.com',
+      name: true
+    })
+  } catch (e) {
+    assert.equal(e.name, 'TypeError')
+    assert.equal(e.message, 'field name is not a string')
+  }
+})
