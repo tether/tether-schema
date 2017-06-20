@@ -32,7 +32,7 @@ schema('User', {
   email: 'foo@bar.com',
   password: 'foo',
 })
-// => trigger FormatError: field password is malformatted
+// => trigger Error: field password is malformatted
 
 
 schema('User', {
