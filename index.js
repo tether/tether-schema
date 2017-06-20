@@ -13,13 +13,14 @@ const protocol = require('protocol-buffers-schema').parse
 
 module.exports = function (schema) {
   const obj = messages(schema)
-  console.log(obj)
   return (name, arg) => {
+    const result = {}
     const message = obj[name]
     Object.keys(message)
       .map(key => {
-        message[key](arg[key])
+        result[key] = message[key](arg[key])
       })
+    return result
   }
 }
 
@@ -42,6 +43,7 @@ function fields (arr) {
     result[field] = function (value) {
       if(item.required && value == null) throw new ReferenceError(`field ${field} is not defined`)
       if (typeof value !== type) throw new TypeError(`field ${field} is not a ${type}`)
+      return value
     }
   })
   return result
