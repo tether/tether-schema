@@ -131,3 +131,21 @@ test('should trigger Error if field is not validated', assert => {
     assert.equal(e.message, 'field password is malformatted')
   }
 })
+
+test('should define mixin', assert => {
+  assert.plan(1)
+  const schema = protocol(`
+    message User {
+      required string name = 1 [mixin = hello];
+    }
+  `, null, {
+    hello(old) {
+      return 'hello ' + old
+    }
+  })
+
+  const result = schema('User', {
+    name: 'foo'
+  })
+  assert.equal(result.name, 'hello foo')
+})
