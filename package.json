@@ -1,0 +1,27 @@
+
+{
+  "name": "tether-schema",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "tape test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tether/tether-schema.git"
+  },
+  "keywords": [
+    "tether"
+  ],
+  "author": "Petrofeed Inc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/tether/tether-schema/issues"
+  },
+  "homepage": "https://github.com/tether/tether-schema#readme",
+  "devDependencies": {
+    "tape": "*"
+  }
+}
+  
