@@ -6,8 +6,22 @@ const protocol = require('protocol-buffers-schema').parse
 
 
 /**
- * This is a simple description.
+ * Create schema from protocol buffer file.
  *
+ * Examples:
+ *
+ *  const validate = schema(`
+ *    message User {
+ *      required string email = 1;
+ *    }
+ *  `)
+ *
+ *   valiate('User', {
+ *     email: 'foo@bar.com'
+ *   })
+ *
+ * @param {String} schema
+ * @return {Function}
  * @api public
  */
 
@@ -25,6 +39,13 @@ module.exports = function (schema) {
   }
 }
 
+/**
+ * Parse messages from schema txt.
+ *
+ * @param {String} schema
+ * @return {Object}
+ * @api private
+ */
 
 function messages (schema) {
   const result = {}
@@ -35,6 +56,14 @@ function messages (schema) {
   return result
 }
 
+
+/**
+ * Parse fields from schema messages.
+ *
+ * @param {Array} arr
+ * @return {Object}
+ * @api private
+ */
 
 function fields (arr) {
   const result = {}
