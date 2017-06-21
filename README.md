@@ -5,7 +5,7 @@
 [![Downloads](https://img.shields.io/npm/dm/tether-schema.svg)](http://npm-stat.com/charts.html?package=tether-schema)
 [![guidelines](https://tether.github.io/contribution-guide/badge-guidelines.svg)](https://github.com/tether/contribution-guide)
 
-Validate your data against a custom protocol buffer syntax.
+Validate your data against a protocol buffer syntax.
   * **validators**: Pass functions to validate and sanitize your data.
   * **mixins**: Change the value of your fields on the fly.
 
