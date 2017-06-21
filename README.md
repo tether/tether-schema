@@ -20,7 +20,7 @@ const schema = protocol(`
     required string password = 2 [mixin = hash];
   }
 `, {
-  password: (value) => {
+  password(value) {
     return value.length > 4
   }
 }, {
